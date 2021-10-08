@@ -39,8 +39,12 @@ public class PooledHikariPointSelectBenchmark {
     public PooledHikariPointSelectBenchmark() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://localhost:3306/sbtest?useSSL=false&useServerPrepStmts=true&cachePrepStmts=true");
-        config.setUsername("root"); config.setPassword(""); config.setMaximumPoolSize(12); config.setMinimumIdle(1);
-        config.setConnectionTimeout(1000); dataSource = new HikariDataSource(config);
+        config.setUsername("root"); 
+        config.setPassword(""); 
+        config.setMaximumPoolSize(12); 
+        config.setMinimumIdle(1);
+        config.setConnectionTimeout(1000); 
+        dataSource = new HikariDataSource(config);
     }
     
     @Setup(Level.Iteration)
