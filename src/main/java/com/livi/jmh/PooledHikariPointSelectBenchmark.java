@@ -22,9 +22,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @State(Scope.Group)
 @Fork(3)
-@Warmup(iterations = 10, time = 3)
-@Measurement(iterations = 10, time = 3)
+@Warmup(iterations = 1, time = 5)
+@Measurement(iterations = 3, time = 10)
 public class PooledHikariPointSelectBenchmark {
+    
+    private final int TEST_DATA_SIZE = 100000;
     
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
     
@@ -40,7 +42,7 @@ public class PooledHikariPointSelectBenchmark {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl("jdbc:mysql://localhost:3306/sbtest?useSSL=false&useServerPrepStmts=true&cachePrepStmts=true");
         config.setUsername("root"); 
-        config.setPassword(""); 
+        config.setPassword("root"); 
         config.setMaximumPoolSize(12); 
         config.setMinimumIdle(1);
         config.setConnectionTimeout(1000); 
@@ -57,7 +59,7 @@ public class PooledHikariPointSelectBenchmark {
     @Benchmark
     public void testMethod() throws Exception {
         long startTime = System.currentTimeMillis(); 
-        preparedStatement.setInt(1, random.nextInt(100000));
+        preparedStatement.setInt(1, random.nextInt(TEST_DATA_SIZE));
         preparedStatement.execute(); latencyList.add(System.currentTimeMillis() - startTime);
     }
     
@@ -65,6 +67,7 @@ public class PooledHikariPointSelectBenchmark {
     public void tearDown() throws Exception {
         preparedStatement.close(); 
         connection.close();
+        System.out.println("execution count is : " + latencyList.size());
         System.out.println("latency min time is : " + getMinTime(latencyList));
         System.out.println("latency max time is : " + getMaxTime(latencyList));
         System.out.println("latency avg time is : " + getAvgTime(latencyList));
