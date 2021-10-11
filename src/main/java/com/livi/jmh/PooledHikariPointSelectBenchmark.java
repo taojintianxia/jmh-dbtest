@@ -20,13 +20,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+/*
+Fork 指的是执行多少组
+Warmup 是预热，
+Measurement 是真实执行
+iterations 指的是执行次数，time 为执行时间，单位为秒
+ */
 @State(Scope.Group)
 @Fork(3)
 @Warmup(iterations = 1, time = 5)
 @Measurement(iterations = 3, time = 10)
 public class PooledHikariPointSelectBenchmark {
     
-    private final int TEST_DATA_SIZE = 100000;
+    private final int TEST_TABLE_SIZE = 100000;
     
     private final ThreadLocalRandom random = ThreadLocalRandom.current();
     
@@ -59,7 +65,7 @@ public class PooledHikariPointSelectBenchmark {
     @Benchmark
     public void testMethod() throws Exception {
         long startTime = System.currentTimeMillis(); 
-        preparedStatement.setInt(1, random.nextInt(TEST_DATA_SIZE));
+        preparedStatement.setInt(1, random.nextInt(TEST_TABLE_SIZE));
         preparedStatement.execute(); latencyList.add(System.currentTimeMillis() - startTime);
     }
     
