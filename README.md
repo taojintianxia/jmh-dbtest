@@ -22,7 +22,7 @@ mvn clean install
 ```
 
 这时候 target 目录下的 `benchmarks-jdbc.jar` 就准备好了。
-接下来可以通过 java -jar benchmarks-jdbc.jar 进行测试，项目会输出如下指标：
+接下来可以通过 `java -jar benchmarks-jdbc.jar` 进行测试，项目会输出如下指标：
 
 execution count is :  -- 一共执行了多少次
 latency min time is : -- 最短执行时间
@@ -41,5 +41,5 @@ sudo yum -y install sysbench
 sysbench oltp_read_only --mysql-host=10.0.0.1 --mysql-port=3306 --mysql-user=root --mysql-password='root' --mysql-db=sbtest --tables=10 --table-size=100000 --report-interval=5 --time=200 --threads=10 --max-requests=0 --percentile=99 --mysql-ignore-errors="all" --rand-type=uniform --range_selects=off --auto_inc=off cleanup
 sysbench oltp_read_only --mysql-host=10.0.0.1 --mysql-port=3306 --mysql-user=root --mysql-password='root' --mysql-db=sbtest --tables=10 --table-size=100000 --report-interval=5 --time=200 --threads=10 --max-requests=0 --percentile=99 --mysql-ignore-errors="all" --rand-type=uniform --range_selects=off --auto_inc=off prepare
 ```
-这里要记得，`table-size` 要跟 `PooledHikariPointSelectBenchmark` 中的 TEST_TABLE_SIZE 相同。
+这里要记得，`table-size` 要跟 `PooledHikariPointSelectBenchmark` 中的 `TEST_TABLE_SIZE` 相同。
 
